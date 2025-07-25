@@ -14,7 +14,7 @@ def generate_plan(user_prompt: str) -> list:
     """
     print("🤖 PLANNER: Thinking... Contacting Gemini API...")
 
-    # We have expanded the instructions to include all our agents' skills.
+    # FINAL UPDATE: We have added Tutor Sam's tools to the master list.
     instruction_prompt = f"""
     You are the planner for a multi-agent AI system. Your job is to analyze a user's request and create a step-by-step plan.
     
@@ -25,14 +25,18 @@ def generate_plan(user_prompt: str) -> list:
     - agent: "assistant_emma", task: "find_available_venues", params: {{{{ "max_price": "<budget in numbers>" }}}}
     - agent: "style_guru_maya", task: "get_moodboard", params: {{{{ "style": "<style>" }}}}
     
-    # --- NEW TOOLS ADDED ---
     # Fitness & Finance Tools
     - agent: "fitcoach_alex", task: "book_gym_class", params: {{{{ "class_name": "Weekly HIIT Session", "date": "Next Monday" }}}}
     - agent: "money_maven_sarah", task: "setup_auto_transfer", params: {{{{ "amount": "<calculated weekly amount>", "frequency": "weekly" }}}}
+
+    # --- NEW TOOLS ADDED ---
+    # Career & Education Tools
+    - agent: "tutor_sam", task: "find_course", params: {{{{ "topic": "<course topic>" }}}}
     
-    Analyze the user's request and create a plan as a JSON formatted list.
-    - If the user asks about a wedding, use the 'find_available_venues' and 'get_moodboard' tasks.
-    - If the user asks about fitness and savings, use the 'book_gym_class' and 'setup_auto_transfer' tasks. For the transfer, calculate the weekly amount needed to reach their goal in the specified time.
+    Analyze the user's request and create an initial plan as a JSON formatted list.
+    - If the user asks about a wedding, use the wedding tools.
+    - If the user asks about fitness and savings, use the fitness and finance tools.
+    - If the user asks about career or learning, identify the topic and use the 'find_course' task.
     
     Return ONLY the raw JSON for the plan and nothing else.
     """
@@ -52,7 +56,7 @@ def generate_plan(user_prompt: str) -> list:
     except Exception as e:
         print(f"❌ PLANNER: Failed to generate plan from Gemini. Error: {e}")
         print("🤖 PLANNER: Using a hardcoded fallback plan.")
-        # We will keep the wedding plan as the default fallback for now.
+        # Fallback remains the wedding plan
         return [
             {'agent': 'assistant_emma', 'task': 'find_available_venues',
                 'params': {'max_price': 16000}},
