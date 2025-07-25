@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "The Grand Oak Pavilion", "price": 15000, "image_file": "venue_grand_oak.jpg" },
+  { "id": 2, "name": "Lakeside Manor", "price": 10000, "image_file": "venue_lakeside.jpg" },
+  { "id": 3, "name": "City View Rooftop", "price": 25000, "image_file": "venue_rooftop.jpg" }
+]
