@@ -5,6 +5,30 @@
 
 Below, sketch (ASCII, hand-drawn JPEG/PNG pasted in, or ASCII art) the high-level components of your agent.
 
+Front-end (React + Tailwind)
+│
+│ User input
+│
+Backend (Google Cloud Functions / Vertex AI Workflow)
+├── Planner Module (planner.py)
+│    └─ Define sub-tasks
+│
+├── Executor Module (executor.py)
+│    └─ Gemini API calls, agent logic execution
+│
+├── Memory Module (memory.py)
+│    └─ Persistent JSON output storage (Cloud Storage or Firestore)
+│
+├── Logging & Monitoring
+│    └─ Google Cloud Logging & Observability
+│
+├── JSON output → Frontend
+│
+Frontend Approval Workflow
+├── Approve → Next Agent
+└── Regenerate → Re-run Current Agent
+
+
 ## Components
 
 1. **User Interface**  
